@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Kakeibo Helper</string>
+    <string name="disp_money_prefix">￥</string>
+</resources>
