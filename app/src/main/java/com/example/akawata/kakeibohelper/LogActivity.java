@@ -91,7 +91,7 @@ public class LogActivity extends AppCompatActivity {
         });
 
         //set to view
-        ((TextView)findViewById(R.id.summary)).setText(getString(R.string.disp_money_prefix) + summary);
+        ((TextView)findViewById(R.id.summary)).setText(summary + " THB");
 
         RecyclerView logRV = findViewById(R.id.log_list);
         logRV.setAdapter(new LogAdapter(list, category, self));
@@ -167,7 +167,7 @@ public class LogActivity extends AppCompatActivity {
                 Map<String, String> log = logList.get(i);
                 logViewHolder.idTV.setText(log.get((Const.KEY_ID)));
                 logViewHolder.dateTV.setText(log.get(Const.KEY_DATE));
-                String money = getString(R.string.disp_money_prefix) + log.get(Const.KEY_MONEY);
+                String money = log.get(Const.KEY_MONEY) + " THB";
                 logViewHolder.moneyTV.setText(money);
                 logViewHolder.memoTV.setText(log.get(Const.KEY_MEMO));
             }

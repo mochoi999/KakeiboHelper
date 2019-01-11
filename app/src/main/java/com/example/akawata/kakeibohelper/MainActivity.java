@@ -27,6 +27,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private EditText moneyEText;
+    private EditText detailEText;
     private PopupWindow otherPopupWindow;
 
     @Override
@@ -46,28 +47,31 @@ public class MainActivity extends AppCompatActivity {
         Button logOtherBtn = findViewById(R.id.log_other);
         Button deleteAllLogBtn = findViewById(R.id.delete_all_log);
 
+        detailEText = findViewById(R.id.detail);
+        final String memo = detailEText.getText().toString();
+
         registerFoodBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                register(Const.CATEGORY_FOOD, null);
+                register(Const.CATEGORY_FOOD);
             }
         });
         registerTransportBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                register(Const.CATEGORY_TRANSPORT, null);
+                register(Const.CATEGORY_TRANSPORT);
             }
         });
         registerPocketBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                register(Const.CATEGORY_POCKET, null);
+                register(Const.CATEGORY_POCKET);
             }
         });
         registerOtherBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showOtherPopup();
+                register(Const.CATEGORY_OTHER);
             }
         });
 
@@ -133,14 +137,14 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void register(String category, String memo) {
+    private void register(String category) {
         if(!validateRegister()){
             return;
         }
 
         //register
         SharedPreferences pref = getSharedPreferences(category, Context.MODE_PRIVATE);
-        SharedPreferences.Editor foodEditor = pref.edit();
+        SharedPreferences.Editor editor = pref.edit();
 
         Calendar now = Calendar.getInstance();
         String id = new SimpleDateFormat("yyyyMMddHHmmss", Locale.JAPAN).format(now.getTime());
@@ -150,17 +154,18 @@ public class MainActivity extends AppCompatActivity {
         try {
             json.put(Const.KEY_DATE, new SimpleDateFormat("MM/dd", Locale.JAPAN).format(now.getTime()));
             json.put(Const.KEY_MONEY, Integer.parseInt(moneyEText.getText().toString()));
-            json.put(Const.KEY_MEMO, StringUtils.defaultString(memo, ""));
+            json.put(Const.KEY_MEMO, StringUtils.defaultString(detailEText.getText().toString(), ""));
 
         } catch (JSONException e) {
             //TODO
             e.printStackTrace();
         }
 
-        foodEditor.putString(id, json.toString());
-        foodEditor.apply();
+        editor.putString(id, json.toString());
+        editor.apply();
 
         moneyEText.setText("");
+        detailEText.setText("");
         showNotification("登録しました");
 
     }
@@ -193,41 +198,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = pref.edit();
         editor.clear();
         editor.apply();
-    }
-
-    private void showOtherPopup(){
-        if(!validateRegister()){
-            return;
-        }
-
-        otherPopupWindow = new PopupWindow(this);
-        final View popLayout = getLayoutInflater().inflate(R.layout.other_popup,new FrameLayout(this));
-        popLayout.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(otherPopupWindow.isShowing()){
-                    otherPopupWindow.dismiss();
-                }
-            }
-        });
-        popLayout.findViewById(R.id.register).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                register(Const.CATEGORY_OTHER, ((EditText)popLayout.findViewById(R.id.memo)).getText().toString());
-                otherPopupWindow.dismiss();
-            }
-        });
-
-        otherPopupWindow.setContentView(popLayout);
-
-        otherPopupWindow.setOutsideTouchable(true);
-        otherPopupWindow.setFocusable(true);
-
-        float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics());
-        otherPopupWindow.setWidth((int) width);
-        otherPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        otherPopupWindow.showAtLocation(findViewById(R.id.money), Gravity.CENTER, 0,0);
     }
 
     private void showNotification(final String message){

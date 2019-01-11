@@ -13,8 +13,6 @@
         android:layout_height="wrap_content"
         android:text="お小遣"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintEnd_toEndOf="@+id/money"
-        app:layout_constraintHorizontal_bias="0.423"
         app:layout_constraintStart_toEndOf="@+id/register_transport"
         app:layout_constraintTop_toTopOf="@+id/register_transport" />
 
@@ -54,8 +52,7 @@
         android:id="@+id/register_transport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="10dp"
         android:text="交通費"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toStartOf="@+id/register_pocket"
@@ -66,11 +63,10 @@
         android:id="@+id/register_other"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:text="その他"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintStart_toStartOf="@+id/log_food"
-        app:layout_constraintTop_toBottomOf="@+id/log_food" />
+        app:layout_constraintStart_toEndOf="@+id/register_pocket"
+        app:layout_constraintTop_toTopOf="@+id/register_pocket" />
 
     <EditText
         android:id="@+id/money"
@@ -80,6 +76,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
+        android:hint="金額"
         android:inputType="number"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -95,8 +92,8 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toStartOf="@+id/register_transport"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@+id/money"
-        app:layout_constraintTop_toBottomOf="@+id/money" />
+        app:layout_constraintStart_toStartOf="@+id/detail"
+        app:layout_constraintTop_toBottomOf="@+id/detail" />
 
     <Button
         android:id="@+id/log_food"
@@ -105,6 +102,7 @@
         android:layout_marginTop="8dp"
         android:text="履歴"
         app:layout_constraintEnd_toEndOf="@+id/register_food"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/register_food"
         app:layout_constraintTop_toBottomOf="@+id/register_food" />
 
@@ -123,12 +121,25 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="328dp"
-        android:layout_height="452dp"
+        android:layout_height="448dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/delete_all_log"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/money"
         app:srcCompat="@drawable/illustrain06_hon04" />
+
+    <EditText
+        android:id="@+id/detail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="詳細"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/money"
+        app:layout_constraintStart_toStartOf="@+id/money"
+        app:layout_constraintTop_toBottomOf="@+id/money" />
 
 </android.support.constraint.ConstraintLayout>
